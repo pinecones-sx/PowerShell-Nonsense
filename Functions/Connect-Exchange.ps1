@@ -4,25 +4,25 @@
 #>
 
 function Connect-Exchange{
-    param ([switch]$Disconnect)
+    param ( [switch]$Disconnect )
 
     If ( $Disconnect ){
-        $EXOSessionConnected = Get-PSSession | Where { ($_.Name -like 'ExchangeOnline*') -and ($_.State -eq 'Opened') }
+        $EXOSessionConnected = Get-PSSession | Where { ( $_.Name -like 'ExchangeOnline*' ) -and ( $_.State -eq 'Opened' ) }
         return $EXOSessionConnected | Remove-PSSession
     }
     Else{
         $EXOInstalled = Get-InstalledModule ExchangeOnlineManagement
-        If (-not $EXOInstalled){
+        If ( -not $EXOInstalled ){
             Install-Module -Name ExchangeOnlineManagement
         }
 
         $EXOLoaded = Get-Module ExchangeOnlineManagement
-        If (-not $EXOLoaded){
+        If ( -not $EXOLoaded ){
             Import-Module -Name ExchangeOnlineManagement
         }
 
-        $EXOSessionConnected = Get-PSSession | Where { ($_.Name -like 'ExchangeOnline*') -and ($_.State -eq 'Opened') }
-        If ($EXOSessionConnected) {
+        $EXOSessionConnected = Get-PSSession | Where { ( $_.Name -like 'ExchangeOnline*' ) -and ( $_.State -eq 'Opened' ) }
+        If ( $EXOSessionConnected ) {
             return $EXOSessionConnected
         }
         Else{
